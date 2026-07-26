@@ -7,8 +7,10 @@ First, activate the mode:
 
     bash ~/.claude/scripts/set-mode.sh coach
 
-Then run `/output-style Coach` if that style isn't already active — it carries the
-hint-escalation ladder and the scaffold-then-hand-over pattern.
+The full coaching brief is injected automatically at session start. If you're
+switching mid-session, read it now so the frame is current:
+
+    cat ~/.claude/modes/coach.md
 
 Topic, if given: **$ARGUMENTS**
 

@@ -140,6 +140,37 @@ Agents: `verifier` (runs builds/tests, **no edit tools**, so it cannot turn a fa
 into a pass; `INCONCLUSIVE` is a first-class verdict) and `scribe` (write-ups grounded
 in git evidence, never laundering an unverified claim into documentation).
 
+## 6b. Two mechanisms that had to be replaced after first install
+
+Both were cases of building on an assumed extension point instead of a verified one.
+
+**Slash-command `!` blocks cannot contain shell expansions.** Command bodies are
+*statically* permission-checked, so `${CLAUDE_PROJECT_DIR:-$PWD}` was rejected with
+"Contains expansion", and `${...}` inside a quoted string with the stricter "brace
+with quote character (expansion obfuscation)". All five commands failed identically.
+Fix: move the logic into `scripts/{set-mode,show-mode,repo-survey}.sh` and have the
+command invoke one verifiable thing — which is exactly what the official `ralph-loop`
+plugin does, and which had been read earlier without the lesson being drawn.
+
+**`~/.claude/output-styles/*.md` is not a working extension point in 2.1.220.** The
+three mode styles never registered. `--safe-mode` does list "output styles" as a
+customization category, so the concept exists somewhere — but no plugin on disk ships
+an `output-styles/` directory, and Anthropic's own `learning-output-style` and
+`explanatory-output-style` plugins both inject via a `SessionStart` hook instead. One
+of their manifests describes itself as mimicking the "*unshipped* Learning output
+style", which was the clue.
+
+Replaced with `hooks/session-start.sh`, which reads the active mode and injects
+`modes/<mode>.md` as `additionalContext`. Strictly better than what was planned:
+one command activates a mode instead of two, and registering for
+`startup|clear|compact` means the frame survives compaction — which matters most
+during long autopilot runs, precisely when losing it would be least visible.
+
+**Platform note:** macOS ships bash 3.2.57. `${var^}` (case modification) is bash 4+
+and failed at runtime. Earlier, `(ba|z|)sh` failed because POSIX ERE has no empty
+alternative. Both were caught by running the scripts rather than reading them. All
+hooks and scripts are now audited clean of bash-4-only constructs.
+
 ## 7. Tooling facts worth remembering
 
 - `--permission-mode` accepts six values: `acceptEdits`, `auto`, `bypassPermissions`,

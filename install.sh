@@ -29,7 +29,7 @@ mkdir -p "$CLAUDE_DIR"
 # hand-written commands to an installer would be unforgivable.
 # ---------------------------------------------------------------------------
 head_ "Directories"
-for d in output-styles commands agents scripts; do
+for d in modes commands agents scripts; do
     target="$CLAUDE_DIR/$d"
     src="$REPO/$d"
     if [[ -L "$target" ]]; then
@@ -120,6 +120,7 @@ fi
 merged=$(jq \
     --arg guard "$REPO/hooks/mode-guard.sh" \
     --arg worklog "$REPO/hooks/worklog.sh" \
+    --arg sessionstart "$REPO/hooks/session-start.sh" \
     --slurpfile frag "$REPO/settings.fragment.json" \
 '
   . as $cur
@@ -136,6 +137,12 @@ merged=$(jq \
          | select([.hooks[]?.command // "" | test("worklog\\.sh")] | any | not)) ]
       + [ { hooks: [ { type: "command", command: ("\"" + $worklog + "\"") } ] } ]
     )
+  | .hooks.SessionStart = (
+      [ (($cur.hooks.SessionStart // [])[]
+         | select([.hooks[]?.command // "" | test("session-start\\.sh")] | any | not)) ]
+      + [ { matcher: "startup|clear|compact",
+            hooks: [ { type: "command", command: ("\"" + $sessionstart + "\"") } ] } ]
+    )
   | .permissions.allow = (((.permissions.allow // []) + ($f.permissions.allow // [])) | unique)
   | .permissions.deny  = (((.permissions.deny  // []) + ($f.permissions.deny  // [])) | unique)
 ' "$settings")
@@ -150,7 +157,7 @@ else
 fi
 
 head_ "Done."
-say "Restart Claude Code (or /clear) to pick up styles, commands, and agents."
-say "Check with: /mode   and   /output-style"
+say "Restart Claude Code (or /clear) to pick up modes, commands, and agents."
+say "Check with: /mode   (and confirm the mode brief arrived by asking what mode you're in)"
 [[ $DRY -eq 1 ]] && say "(dry run — nothing changed)"
 exit 0

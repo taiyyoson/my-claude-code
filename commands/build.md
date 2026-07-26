@@ -7,7 +7,10 @@ First, activate the mode:
 
     bash ~/.claude/scripts/set-mode.sh build
 
-Then run `/output-style Build` if that style isn't already active.
+The full brief is injected automatically at session start. If you're switching
+mid-session, read it now:
+
+    cat ~/.claude/modes/build.md
 
 Task: **$ARGUMENTS**
 

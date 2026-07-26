@@ -7,7 +7,10 @@ First, activate the mode and read the repo state it reports:
 
     bash ~/.claude/scripts/set-mode.sh autopilot
 
-Then run `/output-style Autopilot` if that style isn't already active.
+The full brief is injected automatically at session start. If you're switching
+mid-session, read it now:
+
+    cat ~/.claude/modes/autopilot.md
 
 Goal: **$ARGUMENTS**
 

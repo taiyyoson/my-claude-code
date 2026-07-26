@@ -21,16 +21,25 @@ One command switches the working relationship for a repository. Mode is stored i
 
 `/mode` shows the active mode and what it permits. Default is `build`.
 
-The output styles carry the behavioral frame; `/output-style Coach|Build|Autopilot`
-loads one. The commands set mode state *and* the frame, so normally you just run
-`/coach`, `/build`, or `/autopilot`.
+The behavioral frame for the active mode is injected at session start by
+`hooks/session-start.sh`, so `/coach`, `/build`, or `/autopilot` is all you run — one
+command, no second step.
+
+This deliberately does *not* use `~/.claude/output-styles/`. That path did not prove
+to be a working extension point in 2.1.220: no plugin on disk ships one, and
+Anthropic's own `learning-output-style` and `explanatory-output-style` plugins both
+inject via `SessionStart` instead. The hook is registered for `startup|clear|compact`
+so the frame survives compaction — which matters most during long autopilot runs,
+exactly when it would otherwise be silently lost.
 
 ## Layout
 
     CLAUDE.md                 global instructions — loaded every session, kept short
-    output-styles/            the three mode frames
+    modes/                    the three mode briefs, injected at session start
     commands/                 /coach /build /autopilot /mode /bootstrap
+    scripts/                  set-mode, show-mode, repo-survey (called by commands)
     hooks/
+      session-start.sh        SessionStart: injects the active mode's brief
       mode-guard.sh           PreToolUse: mode boundary + irreversible-op blocks
       worklog.sh              Stop: appends real git diff --stat in autopilot
       lib/mode.sh             shared mode resolution

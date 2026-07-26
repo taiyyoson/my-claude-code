@@ -4,6 +4,12 @@
   "_allow_rationale": "Read-only and routine build commands, pre-approved so prompts stay rare and the guard hook is the thing you actually notice. Nothing here mutates remote state or touches credentials.",
   "permissions": {
     "allow": [
+      "Bash(bash ~/.claude/scripts/set-mode.sh *)",
+      "Bash(bash ~/.claude/scripts/show-mode.sh)",
+      "Bash(bash ~/.claude/scripts/show-mode.sh *)",
+      "Bash(bash ~/.claude/scripts/repo-survey.sh)",
+      "Bash(bash ~/.claude/scripts/repo-survey.sh *)",
+
       "Bash(git status)",
       "Bash(git status *)",
       "Bash(git diff)",

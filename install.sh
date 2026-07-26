@@ -29,7 +29,7 @@ mkdir -p "$CLAUDE_DIR"
 # hand-written commands to an installer would be unforgivable.
 # ---------------------------------------------------------------------------
 head_ "Directories"
-for d in output-styles commands agents; do
+for d in output-styles commands agents scripts; do
     target="$CLAUDE_DIR/$d"
     src="$REPO/$d"
     if [[ -L "$target" ]]; then

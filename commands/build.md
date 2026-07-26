@@ -3,11 +3,11 @@ description: Switch to Build mode — plan first, you supervise, everything veri
 argument-hint: "[what to build or fix]"
 ---
 
-```!
-mkdir -p "${CLAUDE_PROJECT_DIR:-$PWD}/.claude" && printf 'build' > "${CLAUDE_PROJECT_DIR:-$PWD}/.claude/.mode" && echo "mode -> build (edits allowed; irreversible-operation guards still active)"
-```
+First, activate the mode:
 
-Build mode is active. Run `/output-style Build` if that style isn't already loaded.
+    bash ~/.claude/scripts/set-mode.sh build
+
+Then run `/output-style Build` if that style isn't already active.
 
 Task: **$ARGUMENTS**
 
@@ -19,10 +19,10 @@ Proceed like this:
    agreement before editing. A small fix gets a sentence, not phases. State any
    assumption that would change the work if wrong.
 3. **Implement in reviewable increments**, verifying as you go.
-4. **Verify for real.** Run the build, run the tests, read the output, report what
-   it actually said. Never a result you didn't observe. Never a SHA you didn't read.
+4. **Verify for real.** Run the build, run the tests, read the output, report what it
+   actually said. Never a result you didn't observe. Never a SHA you didn't read.
    Delegate to the `verifier` agent if the surface is wide.
 5. **Report**: what changed, what you verified and how, what you left alone.
 
-Checkpoint with the user on genuine design decisions and scope surprises. Make
-routine calls yourself and mention them in passing.
+Checkpoint on genuine design decisions and scope surprises. Make routine calls
+yourself and mention them in passing.

@@ -1,0 +1,7 @@
+# Mode state is per-checkout runtime state, not config
+.mode
+
+# Installer backups
+*.bak-*
+
+.DS_Store

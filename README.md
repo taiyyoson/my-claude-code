@@ -1,5 +1,9 @@
 # claude-init
 
+
+| Putting this on Github for version control + others who might find it useful. It compiles a lot of cool existing skills and Claude Code setups into one super-up. It's my claude code setup.|
+
+
 Version-controlled Claude Code configuration. This repo is the source of truth;
 `~/.claude` holds symlinks into it.
 

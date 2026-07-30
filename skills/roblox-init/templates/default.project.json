@@ -1,0 +1,32 @@
+{
+  "name": "{{PROJECT_NAME}}",
+  "tree": {
+    "$className": "DataModel",
+
+    "ReplicatedStorage": {
+      "{{NS}}": {
+        "$path": "src/shared"
+      }
+    },
+
+    "ServerScriptService": {
+      "{{NS}}": {
+        "$path": "src/server"
+      }
+    },
+
+    "ServerStorage": {
+      "{{NS}}": {
+        "$path": "src/serverstorage"
+      }
+    },
+
+    "StarterPlayer": {
+      "StarterPlayerScripts": {
+        "{{NS}}": {
+          "$path": "src/client"
+        }
+      }
+    }
+  }
+}

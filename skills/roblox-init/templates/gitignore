@@ -1,0 +1,14 @@
+# Place files — binary, single-writer, never committed
+*.rbxl
+*.rbxlx
+
+# Roblox Studio lock files
+*.rbxl.lock
+*.rbxlx.lock
+
+# Generated
+sourcemap.json
+
+# selene's Roblox std, rebuilt from the API dump per machine:
+#   selene generate-roblox-std
+roblox.yml

@@ -1,0 +1,37 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Start Rojo Server",
+            "type": "shell",
+            "command": "rojo serve",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Watch Sourcemap",
+            "type": "shell",
+            "command": "rojo sourcemap --watch --include-non-scripts --output sourcemap.json",
+            "presentation": {
+                "reveal": "silent",
+                "panel": "dedicated"
+            }
+        },
+        {
+            "label": "Format and Lint",
+            "type": "shell",
+            "command": "stylua src/ && selene src/",
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        }
+    ]
+}

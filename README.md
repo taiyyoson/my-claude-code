@@ -50,7 +50,7 @@ exactly when it would otherwise be silently lost.
       test-mode-guard.sh      29 cases — run after editing the guard
     agents/                   loaded globally: verifier, scribe, code-review-debugger
     agents-optional/          per-project only, no global context cost
-    skills/                   vendored active skills (see NOTICE.md)
+    skills/                   roblox-init (written here) + vendored (see NOTICE.md)
     reference/                study material, deliberately NOT auto-loaded
     modes-legacy/             earlier prompt-file experiments, kept for reference
     settings.fragment.json    permissions merged into ~/.claude/settings.json

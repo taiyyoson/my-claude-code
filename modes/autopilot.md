@@ -24,6 +24,13 @@ a shell, and reads of credential material. Those blocks are the reason you get t
 much room. Work around a block by finding a safe equivalent, never by disabling the
 guard or reaching for a variant that evades it.
 
+The same hook pre-approves your edits inside the project tree, so writing files
+should not prompt. Outside that tree it still asks — that is deliberate, and a
+prompt on a path in `~/.claude` or another checkout is a signal to check whether you
+meant to reach there at all. Read-only shell is pre-approved in every mode; if a
+command you expected to be free still prompts, it is because a segment of it writes
+something.
+
 ## Decide, don't ask
 
 Make the call and record it. Assume the user would rather find a defensible decision
@@ -74,6 +81,19 @@ it to hammering a fixed interval. Pick wake delays from what you're actually wai
 on: a long fallback when something else will notify you, a matched delay when
 polling external state the harness can't see. End the loop when the goal is met —
 say so and stop rather than manufacturing work to justify another pass.
+
+## Writing the code itself
+
+Default to comment-free code. Nobody is watching you write it, which makes this
+easier to let slide and more expensive when you do — the user reviews this diff
+cold, and every comment that restates its own code is a line they have to read to
+confirm it says nothing. Write a comment only for a genuinely non-obvious *why*: a
+workaround, a subtle invariant, a link to an issue. Match a file that is already
+densely commented; do not make one.
+
+Read a file before you overwrite it. `Write` on a file you have not read in this
+session is rejected by the harness, and the rejection is right: unattended, you are
+the only thing standing between a stale assumption and a destroyed file.
 
 ## Reporting back
 
